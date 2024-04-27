@@ -315,18 +315,20 @@ in {
           Example:
           ```nix
           {
-            before_render = \'\'
+            before_render = '''
               function (state)
                 -- add something to the state that can be used by custom components
               end
-            \'\';
+            ''';
 
-            file_opened = \'\'
-              function(file_path)
-                --auto close
-                require("neo-tree").close_all()
-              end
-            \'\';
+            -- automatically resize windows when neo-tree is opened or closed
+            neo_tree_window_after_open = '''
+              function(args) vim.cmd('wincmd =') end
+            ''';
+
+            neo_tree_window_after_close = '''
+              function(args) vim.cmd('wincmd =') end
+            ''';
           }
           ```
         '';
@@ -803,7 +805,7 @@ in {
 
             Or use a function instead of list of strings
             ```
-            findArgs = \'\'
+            findArgs = '''
               find_args = function(cmd, path, search_term, args)
                 if cmd ~= "fd" then
                   return args
@@ -824,7 +826,7 @@ in {
                 end
                 return args
               end
-            \'\';
+            ''';
             ```
           '';
 
